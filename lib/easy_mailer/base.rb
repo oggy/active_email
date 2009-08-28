@@ -55,5 +55,7 @@ module EasyMailer
         end
       EOS
     end
+
+    helper EasyMailer::Helper
   end
 end

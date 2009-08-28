@@ -39,5 +39,11 @@ describe "An ApplicationMailer subclass with a greeting email which requires a n
       model.deliver.should be_true
       email.to.should == ['fred@example.com']
     end
+
+    it "should set let the template have access to methods on the email" do
+      model = TestMailer.greeting_email(:name => 'Fred')
+      model.deliver.should be_true
+      email.body.should == 'Hi, Fred!'
+    end
   end
 end
