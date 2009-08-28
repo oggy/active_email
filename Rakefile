@@ -1,17 +1,5 @@
 require 'rake'
-require 'rake/testtask'
 require 'rake/rdoctask'
-
-desc 'Default: run unit tests.'
-task :default => :test
-
-desc 'Test the easy_mailer plugin.'
-Rake::TestTask.new(:test) do |t|
-  t.libs << 'lib'
-  t.libs << 'test'
-  t.pattern = 'test/**/*_test.rb'
-  t.verbose = true
-end
 
 desc 'Generate documentation for the easy_mailer plugin.'
 Rake::RDocTask.new(:rdoc) do |rdoc|
