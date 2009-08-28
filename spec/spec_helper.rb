@@ -4,6 +4,10 @@ require 'action_mailer'
 
 require 'init'
 
+PLUGIN_ROOT = File.dirname(__FILE__) + '/..'
+
+ActionMailer::Base.delivery_method = :test
+
 module SpecHelper
 end
 
