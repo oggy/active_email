@@ -1,6 +1,10 @@
 module EasyMailer
   class Base < ActionMailer::Base
     class Email
+      attr_accessor :recipients
+      alias to recipients
+      alias to= recipients=
+
       include Validatable
 
       def initialize(mailer, mail_name, attributes={})
@@ -47,6 +51,7 @@ module EasyMailer
 
         def #{name}(email)
           @email = email
+          recipients email.recipients
         end
       EOS
     end

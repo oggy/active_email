@@ -1,20 +1,6 @@
 require 'spec_helper'
 
 describe "An ApplicationMailer subclass with a greeting email which requires a name" do
-  class TestMailer < EasyMailer::Base
-    email :greeting do
-      attr_accessor :name
-      validates_presence_of :name
-    end
-
-    # read templates from spec dir
-    self.template_root = "#{PLUGIN_ROOT}/spec/views"
-  end
-
-  before do
-    ActionMailer::Base.deliveries.clear
-  end
-
   describe ".greeting_email" do
     it "should return #email model" do
       model = TestMailer.greeting_email(:name => 'Fred')
@@ -40,6 +26,18 @@ describe "An ApplicationMailer subclass with a greeting email which requires a n
         model.errors.on(:name).should_not be_nil
         ActionMailer::Base.deliveries.should be_empty
       end
+    end
+  end
+
+  describe "Email#deliver" do
+    def email
+      ActionMailer::Base.deliveries.first
+    end
+
+    it "should set the to address" do
+      model = TestMailer.greeting_email(:recipients => 'fred@example.com', :name => 'Fred')
+      model.deliver.should be_true
+      email.to.should == ['fred@example.com']
     end
   end
 end

@@ -3,12 +3,22 @@ require 'mocha'
 require 'action_mailer'
 
 require 'init'
+require 'easy_mailer/email_rat'
 
 PLUGIN_ROOT = File.dirname(__FILE__) + '/..'
+
+require 'lib/test_mailer'
 
 ActionMailer::Base.delivery_method = :test
 
 module SpecHelper
+  def self.included(base)
+    base.before{clear_deliveries}
+  end
+
+  def clear_deliveries
+    ActionMailer::Base.deliveries.clear
+  end
 end
 
 Spec::Runner.configure do |config|
