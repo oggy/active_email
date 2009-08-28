@@ -4,6 +4,7 @@ require 'action_mailer'
 
 require 'init'
 require 'easy_mailer/email_rat'
+require 'easy_mailer/rspec'
 
 PLUGIN_ROOT = File.dirname(__FILE__) + '/..'
 
