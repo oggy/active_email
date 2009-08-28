@@ -1,7 +1,7 @@
 EasyMailer
 ==========
 
-Introduction goes here.
+Makes using ActionMailer fun.
 
 
 Example
@@ -10,4 +10,4 @@ Example
 Example goes here.
 
 
-Copyright (c) 2009 [name of plugin creator], released under the MIT license
+Copyright (c) 2009 George Ogata, released under the MIT license
