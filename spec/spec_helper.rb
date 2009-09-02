@@ -1,5 +1,6 @@
 require 'spec'
 require 'mocha'
+require 'active_record'  # For ActiveRecordBaseWithoutTable
 require 'action_mailer'
 
 require 'init'

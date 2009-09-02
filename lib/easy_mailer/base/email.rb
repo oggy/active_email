@@ -1,11 +1,9 @@
 module EasyMailer
   class Base
-    class Email
+    class Email < ActiveRecordBaseWithoutTable
       attr_accessor :recipients
       alias to recipients
       alias to= recipients=
-
-      include Validatable
 
       def initialize(mailer, mail_name, attributes={})
         @mailer = mailer
