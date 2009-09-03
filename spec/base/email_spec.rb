@@ -5,7 +5,7 @@ describe Base::Email do
     before do
       temporary_mailer :TestMailer do
         const_set(:Greeting, Class.new(Base::Email)).class_eval do
-          attr_accessible :name
+          attr_accessor :name
           validates_presence_of :name
         end
       end
@@ -127,7 +127,5 @@ describe Base::Email do
     it "should have a default of {} for #headers" do
       @email.headers.should == {}
     end
-
-    it "should not make any of the email fields accessible by default"
   end
 end

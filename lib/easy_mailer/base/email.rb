@@ -43,15 +43,6 @@ module EasyMailer
           false
         end
       end
-
-      #
-      # Make the given attributes accessible via mass-assignment.  The
-      # attributes are created if they don't exist yet.
-      #
-      def self.attr_accessible(*names)
-        # TODO: implement whitelisting
-        attr_accessor(*names)
-      end
     end
   end
 end

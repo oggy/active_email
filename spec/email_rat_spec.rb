@@ -4,7 +4,7 @@ describe EmailRat do
   before do
     temporary_mailer :TestMailer do
       const_set(:Greeting, Class.new(Base::Email)).class_eval do
-        attr_accessible :name
+        attr_accessor :name
       end
     end
     make_template TestMailer, :greeting, "Hi, <%= name %>!"
