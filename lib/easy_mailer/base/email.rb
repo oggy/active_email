@@ -23,8 +23,7 @@ module EasyMailer
       end
       attr_writer :headers
 
-      def initialize(mailer, attributes={})
-        @mailer = mailer
+      def initialize(attributes={})
         attributes.each do |name, value|
           send("#{name}=", value)
         end
@@ -36,7 +35,7 @@ module EasyMailer
       def deliver
         if valid?
           run_callbacks :before_delivery
-          @mailer.deliver_easy_email(self)
+          self.class.parent.deliver_easy_email(self)
           run_callbacks :after_delivery
           true
         else

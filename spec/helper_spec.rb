@@ -6,7 +6,7 @@ describe Helper do
       const_set(:Greeting, Class.new(Base::Email))
     end
     make_template TestMailer, :greeting, "<%= to.inspect %> | <%= from.inspect %>"
-    @email = TestMailer.new_email(:greeting, {})
+    @email = TestMailer::Greeting.new
   end
 
   def delivery

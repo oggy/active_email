@@ -1,9 +1,5 @@
 module EasyMailer
   class Base < ActionMailer::Base
-    def self.new_email(type, attributes={})
-      const_get(type.to_s.camelize).new(self, attributes)
-    end
-
     def easy_email(email)
       @email = email
       template     email.class.name.underscore

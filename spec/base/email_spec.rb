@@ -12,13 +12,13 @@ describe Base::Email do
     end
 
     it "should work like ActiveRecord" do
-      model = TestMailer.new_email(:greeting, :name => '')
+      model = TestMailer::Greeting.new(:name => '')
       model.should_not be_valid
       model.errors.on(:name).should_not be_nil
     end
 
     it "should prevent the email being sent if the email does not validate" do
-      model = TestMailer.new_email(:greeting, :name => '')
+      model = TestMailer::Greeting.new(:name => '')
       model.deliver.should be_false
       model.errors.on(:name).should_not be_nil
       ActionMailer::Base.deliveries.should be_empty
@@ -37,7 +37,7 @@ describe Base::Email do
         end
       end
       make_template TestMailer, :greeting, ''
-      @email = TestMailer.new_email(:greeting, {})
+      @email = TestMailer::Greeting.new
     end
 
     it "should fire just before calling #deliver" do
@@ -64,7 +64,7 @@ describe Base::Email do
         end
       end
       make_template TestMailer, :greeting, ''
-      @email = TestMailer.new_email(:greeting, {})
+      @email = TestMailer::Greeting.new
     end
 
     it "should fire just after calling #deliver" do
@@ -85,7 +85,7 @@ describe Base::Email do
         const_set(:Greeting, Class.new(Base::Email))
       end
       make_template TestMailer, :greeting, 'hi'
-      @email = TestMailer.new_email(:greeting, {})
+      @email = TestMailer::Greeting.new
     end
 
     def delivery

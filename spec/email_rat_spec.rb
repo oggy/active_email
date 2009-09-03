@@ -26,7 +26,7 @@ describe EmailRat do
 
   describe "#receive" do
     def send_greeting_to(name)
-      email = TestMailer.new_email(:greeting, :name => name.capitalize)
+      email = TestMailer::Greeting.new(:name => name.capitalize)
       email.to = "#{name}@example.com"
       email.deliver.should be_true
     end

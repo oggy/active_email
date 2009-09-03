@@ -11,14 +11,9 @@ describe "An ApplicationMailer subclass with a greeting email which requires a n
       make_template TestMailer, :greeting, "Hi, <%= name %>!"
     end
 
-    it "should return an email model" do
-      model = TestMailer.new_email(:greeting, :name => 'Fred')
-      model.should be_a(TestMailer::Email)
-    end
-
     describe "#deliver on the model" do
       it "should return true and send the email if the email validates" do
-        model = TestMailer.new_email(:greeting, :name => 'Fred')
+        model = TestMailer::Greeting.new(:name => 'Fred')
         model.deliver.should be_true
         ActionMailer::Base.deliveries.should have(1).email
       end
@@ -31,7 +26,7 @@ describe "An ApplicationMailer subclass with a greeting email which requires a n
         const_set(:Greeting, Class.new(Base::Email))
       end
       make_template TestMailer, :greeting, 'hi'
-      @email = TestMailer.new_email(:greeting, {})
+      @email = TestMailer::Greeting.new
     end
 
     def delivery
