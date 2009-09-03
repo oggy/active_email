@@ -25,7 +25,7 @@ describe Base::Email do
     end
   end
 
-  describe "#before_delivery" do
+  describe "before_delivery callback" do
     before do
       temporary_mailer :TestMailer do
         const_set(:Greeting, Class.new(Base::Email)).class_eval do
@@ -52,7 +52,7 @@ describe Base::Email do
     end
   end
 
-  describe "#after_delivery" do
+  describe "after_delivery callback" do
     before do
       temporary_mailer :TestMailer do
         const_set(:Greeting, Class.new(Base::Email)).class_eval do
