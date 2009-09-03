@@ -43,7 +43,7 @@ describe "An ApplicationMailer subclass with a greeting email which requires a n
       @email.deliver.should be_true  # sanity check
       delivery.to.should == ['to@example.com']
     end
-if false
+
     it "should pass the #subject field to ActionMailer" do
       @email.subject = 'SUBJECT'
       @email.deliver.should be_true  # sanity check
@@ -77,7 +77,7 @@ if false
     it "should pass the #sent_on field to ActionMailer" do
       @email.sent_on = Time.parse('December 21, 2012 12:34')
       @email.deliver.should be_true  # sanity check
-      delivery.sent_on.should == Time.parse('December 21, 2012 12:34')
+      delivery.date.should == Time.parse('December 21, 2012 12:34')
     end
 
     it "should pass the #content_type field to ActionMailer" do
@@ -87,15 +87,14 @@ if false
     end
 
     it "should pass the #headers field to ActionMailer" do
-      @email.headers = ['X-Mailer: Spam Cannon']
+      @email.headers = {'X-Mailer' => 'Spam Cannon'}
       @email.deliver.should be_true  # sanity check
-      delivery.headers.should == ['X-Mailer: Spam Cannon']
+      delivery.header_string('X-Mailer').should == 'Spam Cannon'
     end
 
     it "should pass the rendered template to ActionMailer as the body" do
       @email.deliver.should be_true  # sanity check
       delivery.body.should == 'hi'
     end
-end
   end
 end
