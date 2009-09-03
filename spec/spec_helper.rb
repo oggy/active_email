@@ -14,19 +14,8 @@ PLUGIN_ROOT = File.dirname(__FILE__) + '/..'
 
 ActionMailer::Base.delivery_method = :test
 
-module SpecHelper
-  def self.included(base)
-    base.before{clear_deliveries}
-  end
-
-  def clear_deliveries
-    ActionMailer::Base.deliveries.clear
-  end
-end
-
 Spec::Runner.configure do |config|
   config.mock_with :mocha
-  config.include SpecHelper
   config.include Helpers::TemporaryDirectory
   config.include Helpers::TemporaryMailer
 end
