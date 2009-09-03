@@ -3,10 +3,10 @@ require 'spec_helper'
 describe Helper do
   before do
     temporary_mailer :TestMailer do
-      email(:greeting){}
+      const_set(:Greeting, Class.new(Base::Email))
     end
     make_template TestMailer, :greeting, "<%= to.inspect %> | <%= from.inspect %>"
-    @email = TestMailer.greeting_email({})
+    @email = TestMailer.new_email(:greeting, {})
   end
 
   def delivery

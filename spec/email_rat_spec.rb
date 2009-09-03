@@ -3,9 +3,8 @@ require 'spec_helper'
 describe EmailRat do
   before do
     temporary_mailer :TestMailer do
-      email :greeting do
-        attr_accessor :name
-        attr_accessible :recipients
+      const_set(:Greeting, Class.new(Base::Email)).class_eval do
+        attr_accessible :name
       end
     end
     make_template TestMailer, :greeting, "Hi, <%= name %>!"
@@ -27,8 +26,9 @@ describe EmailRat do
 
   describe "#receive" do
     def send_greeting_to(name)
-      attributes = {:to => "#{name}@example.com", :name => name.capitalize}
-      TestMailer.greeting_email(attributes).deliver
+      email = TestMailer.new_email(:greeting, :name => name.capitalize)
+      email.to = "#{name}@example.com"
+      email.deliver.should be_true
     end
 
     describe "the first time it is called" do

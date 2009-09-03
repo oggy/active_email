@@ -4,7 +4,7 @@ describe Base::Email do
   describe "validations" do
     before do
       temporary_mailer :TestMailer do
-        email :greeting do
+        const_set(:Greeting, Class.new(Base::Email)).class_eval do
           attr_accessible :name
           validates_presence_of :name
         end
@@ -12,13 +12,13 @@ describe Base::Email do
     end
 
     it "should work like ActiveRecord" do
-      model = TestMailer.greeting_email(:name => '')
+      model = TestMailer.new_email(:greeting, :name => '')
       model.should_not be_valid
       model.errors.on(:name).should_not be_nil
     end
 
     it "should prevent the email being sent if the email does not validate" do
-      model = TestMailer.greeting_email(:name => '')
+      model = TestMailer.new_email(:greeting, :name => '')
       model.deliver.should be_false
       model.errors.on(:name).should_not be_nil
       ActionMailer::Base.deliveries.should be_empty
@@ -28,7 +28,7 @@ describe Base::Email do
   describe "#before_delivery" do
     before do
       temporary_mailer :TestMailer do
-        email :greeting do
+        const_set(:Greeting, Class.new(Base::Email)).class_eval do
           attr_accessor :num_deliveries
           before_delivery :set_num_deliveries
           def set_num_deliveries
@@ -37,7 +37,7 @@ describe Base::Email do
         end
       end
       make_template TestMailer, :greeting, ''
-      @email = TestMailer.greeting_email({})
+      @email = TestMailer.new_email(:greeting, {})
     end
 
     it "should fire just before calling #deliver" do
@@ -55,7 +55,7 @@ describe Base::Email do
   describe "#after_delivery" do
     before do
       temporary_mailer :TestMailer do
-        email :greeting do
+        const_set(:Greeting, Class.new(Base::Email)).class_eval do
           attr_accessor :num_deliveries
           after_delivery :set_num_deliveries
           def set_num_deliveries
@@ -64,7 +64,7 @@ describe Base::Email do
         end
       end
       make_template TestMailer, :greeting, ''
-      @email = TestMailer.greeting_email({})
+      @email = TestMailer.new_email(:greeting, {})
     end
 
     it "should fire just after calling #deliver" do
@@ -82,10 +82,10 @@ describe Base::Email do
   describe "email fields" do
     before do
       temporary_mailer :TestMailer do
-        email(:greeting){}
+        const_set(:Greeting, Class.new(Base::Email))
       end
       make_template TestMailer, :greeting, 'hi'
-      @email = TestMailer.greeting_email({})
+      @email = TestMailer.new_email(:greeting, {})
     end
 
     def delivery
