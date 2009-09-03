@@ -25,6 +25,60 @@ describe Base::Email do
     end
   end
 
+  describe "#before_delivery" do
+    before do
+      temporary_mailer :TestMailer do
+        email :greeting do
+          attr_accessor :num_deliveries
+          before_delivery :set_num_deliveries
+          def set_num_deliveries
+            self.num_deliveries = ActionMailer::Base.deliveries.size
+          end
+        end
+      end
+      make_template TestMailer, :greeting, ''
+      @email = TestMailer.greeting_email({})
+    end
+
+    it "should fire just before calling #deliver" do
+      @email.deliver.should be_true
+      @email.num_deliveries.should == 0
+    end
+
+    it "should not be called if validation fails" do
+      @email.stubs(:valid?).returns(false)
+      @email.deliver.should be_false
+      @email.num_deliveries.should be_nil
+    end
+  end
+
+  describe "#after_delivery" do
+    before do
+      temporary_mailer :TestMailer do
+        email :greeting do
+          attr_accessor :num_deliveries
+          after_delivery :set_num_deliveries
+          def set_num_deliveries
+            self.num_deliveries = ActionMailer::Base.deliveries.size
+          end
+        end
+      end
+      make_template TestMailer, :greeting, ''
+      @email = TestMailer.greeting_email({})
+    end
+
+    it "should fire just after calling #deliver" do
+      @email.deliver.should be_true
+      @email.num_deliveries.should == 1
+    end
+
+    it "should not be called if validation fails" do
+      @email.stubs(:valid?).returns(false)
+      @email.deliver.should be_false
+      @email.num_deliveries.should be_nil
+    end
+  end
+
   describe "email fields" do
     before do
       temporary_mailer :TestMailer do

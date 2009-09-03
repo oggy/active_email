@@ -1,6 +1,8 @@
 module EasyMailer
   class Base
     class Email < ActiveRecordBaseWithoutTable
+      define_callbacks :before_delivery, :after_delivery
+
       [:to, :from, :cc, :bcc, :reply_to].each do |name|
         class_eval <<-EOS, __FILE__, __LINE__
           def #{name}
@@ -34,7 +36,9 @@ module EasyMailer
       #
       def deliver
         if valid?
+          run_callbacks :before_delivery
           @mailer.send("deliver_#{@mail_name}", self)
+          run_callbacks :after_delivery
           true
         else
           false
