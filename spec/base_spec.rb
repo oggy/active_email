@@ -1,8 +1,19 @@
 require 'spec_helper'
 
 describe "An ApplicationMailer subclass with a greeting email which requires a name" do
+  before do
+    temporary_mailer :TestMailer do
+      email :greeting do
+        attr_accessor :name
+        validates_presence_of :name
+        attr_accessible :recipients
+      end
+    end
+    make_template TestMailer, :greeting, "Hi, <%= name %>!"
+  end
+
   describe ".greeting_email" do
-    it "should return #email model" do
+    it "should return an #email model" do
       model = TestMailer.greeting_email(:name => 'Fred')
       model.should be_a(TestMailer::Email)
     end

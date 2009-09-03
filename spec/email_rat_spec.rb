@@ -2,6 +2,16 @@ require 'spec_helper'
 
 describe EmailRat do
   before do
+    temporary_mailer :TestMailer do
+      email :greeting do
+        attr_accessor :name
+        attr_accessible :recipients
+      end
+    end
+    make_template TestMailer, :greeting, "Hi, <%= name %>!"
+  end
+
+  before do
     @rat = EmailRat.new('fred@example.com')
   end
 
