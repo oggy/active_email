@@ -13,7 +13,8 @@ begin
     gem.email = "george.ogata@gmail.com"
     gem.homepage = "http://github.com/oggy/easy_mailer"
     gem.authors = ["George Ogata"]
-    gem.add_development_dependency "rspec"
+    gem.add_development_dependency "rspec", '= 1.2.8'
+    gem.add_development_dependency "mocha", '= 0.9.7'
     gem.add_dependency "actionmailer"
   end
 rescue LoadError
