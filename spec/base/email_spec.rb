@@ -24,4 +24,56 @@ describe Base::Email do
       ActionMailer::Base.deliveries.should be_empty
     end
   end
+
+  describe "email fields" do
+    before do
+      temporary_mailer :TestMailer do
+        email(:greeting){}
+      end
+      make_template TestMailer, :greeting, 'hi'
+      @email = TestMailer.greeting_email({})
+    end
+
+    def delivery
+      ActionMailer::Base.deliveries.first
+    end
+
+    it "should have a default of [] for #to" do
+      @email.to.should == []
+    end
+
+    it "should have a default of nil for #subject" do
+      @email.subject.should be_nil
+    end
+
+    it "should have a default of [] for #from" do
+      @email.from.should == []
+    end
+
+    it "should have a default of [] for #cc" do
+      @email.cc.should == []
+    end
+
+    it "should have a default of [] for #bcc" do
+      @email.bcc.should == []
+    end
+
+    it "should have a default of [] for #reply_to" do
+      @email.reply_to.should == []
+    end
+
+    it "should have a default of nil for #sent_on" do
+      @email.sent_on.should be_nil
+    end
+
+    it "should have a default of nil for #content_type" do
+      @email.content_type.should be_nil
+    end
+
+    it "should have a default of {} for #headers" do
+      @email.headers.should == {}
+    end
+
+    it "should not make any of the email fields accessible by default"
+  end
 end

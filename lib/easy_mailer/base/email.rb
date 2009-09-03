@@ -1,9 +1,25 @@
 module EasyMailer
   class Base
     class Email < ActiveRecordBaseWithoutTable
-      attr_accessor :recipients
-      alias to recipients
-      alias to= recipients=
+      [:to, :from, :cc, :bcc, :reply_to].each do |name|
+        class_eval <<-EOS, __FILE__, __LINE__
+          def #{name}
+            @#{name} ||= []
+          end
+          def #{name}=(value)
+            @#{name} = Array(value)
+          end
+        EOS
+      end
+
+      attr_accessor :subject
+      attr_accessor :sent_on
+      attr_accessor :content_type
+
+      def headers
+        @headers ||= {}
+      end
+      attr_writer :headers
 
       def initialize(mailer, mail_name, attributes={})
         @mailer = mailer
