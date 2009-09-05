@@ -1,5 +1,5 @@
 module EasyMailer
-  class Base < ActionMailer::Base
+  class Mailer < ActionMailer::Base
     def easy_email(email)
       @email = email
       template     email.class.name.underscore
@@ -14,6 +14,6 @@ module EasyMailer
       headers      email.headers
     end
 
-    helper EasyMailer::Helper
+    helper Helper
   end
 end

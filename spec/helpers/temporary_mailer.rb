@@ -10,7 +10,7 @@ module Helpers
       base.after{finalize_temporary_mailers}
     end
 
-    def temporary_mailer(name, superclass=Base, &definition)
+    def temporary_mailer(name, superclass=Mailer, &definition)
       mailer_class = Class.new(superclass)
       Object.const_set(name, mailer_class)
       mailer_class.class_eval(&definition)
