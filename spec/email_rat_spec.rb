@@ -3,7 +3,7 @@ require 'spec_helper'
 describe EmailRat do
   before do
     temporary_mailer :TestMailer do
-      const_set(:Greeting, Class.new(Base::Email)).class_eval do
+      const_set(:Greeting, Class.new(Email)).class_eval do
         attr_accessor :name
       end
     end

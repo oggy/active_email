@@ -1,10 +1,10 @@
 require 'spec_helper'
 
-describe Base::Email do
+describe Email do
   describe "#deliver" do
     before do
       temporary_mailer :TestMailer do
-        const_set(:Greeting, Class.new(Base::Email)).class_eval do
+        const_set(:Greeting, Class.new(Email)).class_eval do
           attr_accessor :name
         end
       end
@@ -21,7 +21,7 @@ describe Base::Email do
   describe "validations" do
     before do
       temporary_mailer :TestMailer do
-        const_set(:Greeting, Class.new(Base::Email)).class_eval do
+        const_set(:Greeting, Class.new(Email)).class_eval do
           attr_accessor :name
           validates_presence_of :name
         end
@@ -45,7 +45,7 @@ describe Base::Email do
   describe "before_delivery callback" do
     before do
       temporary_mailer :TestMailer do
-        const_set(:Greeting, Class.new(Base::Email)).class_eval do
+        const_set(:Greeting, Class.new(Email)).class_eval do
           attr_accessor :num_deliveries
           before_delivery :set_num_deliveries
           def set_num_deliveries
@@ -72,7 +72,7 @@ describe Base::Email do
   describe "after_delivery callback" do
     before do
       temporary_mailer :TestMailer do
-        const_set(:Greeting, Class.new(Base::Email)).class_eval do
+        const_set(:Greeting, Class.new(Email)).class_eval do
           attr_accessor :num_deliveries
           after_delivery :set_num_deliveries
           def set_num_deliveries
@@ -99,7 +99,7 @@ describe Base::Email do
   describe "email fields" do
     before do
       temporary_mailer :TestMailer do
-        const_set(:Greeting, Class.new(Base::Email))
+        const_set(:Greeting, Class.new(Email))
       end
       make_template TestMailer, :greeting, 'hi'
       @email = TestMailer::Greeting.new

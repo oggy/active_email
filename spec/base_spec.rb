@@ -4,7 +4,7 @@ describe "An ApplicationMailer subclass with a greeting email which requires a n
   describe "#easy_email" do
     before do
       temporary_mailer :TestMailer do
-        const_set(:Greeting, Class.new(Base::Email))
+        const_set(:Greeting, Class.new(Email))
       end
       make_template TestMailer, :greeting, 'hi'
       @email = TestMailer::Greeting.new

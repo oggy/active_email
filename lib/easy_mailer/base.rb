@@ -17,5 +17,3 @@ module EasyMailer
     helper EasyMailer::Helper
   end
 end
-
-require 'easy_mailer/base/email'
