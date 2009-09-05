@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "An ApplicationMailer subclass with a greeting email which requires a name" do
+describe Mailer do
   describe "#easy_email" do
     before do
       temporary_mailer :TestMailer do
