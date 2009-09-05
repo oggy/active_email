@@ -1,26 +1,7 @@
 require 'spec_helper'
 
 describe "An ApplicationMailer subclass with a greeting email which requires a name" do
-  describe ".new_email" do
-    before do
-      temporary_mailer :TestMailer do
-        const_set(:Greeting, Class.new(Base::Email)).class_eval do
-          attr_accessor :name
-        end
-      end
-      make_template TestMailer, :greeting, "Hi, <%= name %>!"
-    end
-
-    describe "#deliver on the model" do
-      it "should return true and send the email if the email validates" do
-        model = TestMailer::Greeting.new(:name => 'Fred')
-        model.deliver.should be_true
-        ActionMailer::Base.deliveries.should have(1).email
-      end
-    end
-  end
-
-  describe "Email#deliver" do
+  describe "#easy_email" do
     before do
       temporary_mailer :TestMailer do
         const_set(:Greeting, Class.new(Base::Email))

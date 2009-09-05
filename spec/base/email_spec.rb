@@ -1,6 +1,23 @@
 require 'spec_helper'
 
 describe Base::Email do
+  describe "#deliver" do
+    before do
+      temporary_mailer :TestMailer do
+        const_set(:Greeting, Class.new(Base::Email)).class_eval do
+          attr_accessor :name
+        end
+      end
+      make_template TestMailer, :greeting, "Hi, <%= name %>!"
+    end
+
+    it "should return true and send the email if the email validates" do
+      model = TestMailer::Greeting.new(:name => 'Fred')
+      model.deliver.should be_true
+      ActionMailer::Base.deliveries.should have(1).email
+    end
+  end
+
   describe "validations" do
     before do
       temporary_mailer :TestMailer do
