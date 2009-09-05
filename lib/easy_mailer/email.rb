@@ -34,7 +34,7 @@ module EasyMailer
     def deliver
       if valid?
         run_callbacks :before_delivery
-        self.class.parent.deliver_easy_email(self)
+        Mailer.deliver_easy_email(self)
         run_callbacks :after_delivery
         true
       else

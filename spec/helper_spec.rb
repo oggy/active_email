@@ -2,11 +2,9 @@ require 'spec_helper'
 
 describe Helper do
   before do
-    temporary_mailer :TestMailer do
-      const_set(:Greeting, Class.new(Email))
-    end
-    make_template TestMailer, :greeting, "<%= to.inspect %> | <%= from.inspect %>"
-    @email = TestMailer::Greeting.new
+    temporary_email_class :Greeting
+    make_template "greeting.erb", "<%= to.inspect %> | <%= from.inspect %>"
+    @email = Greeting.new
   end
 
   def delivery

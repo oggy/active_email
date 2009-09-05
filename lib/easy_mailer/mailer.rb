@@ -15,5 +15,9 @@ module EasyMailer
     end
 
     helper Helper
+
+    # Make ActionMailer ignore the mailer name when searching for
+    # templates.
+    self.mailer_name = ''
   end
 end

@@ -3,39 +3,35 @@ require 'spec_helper'
 describe Email do
   describe "#deliver" do
     before do
-      temporary_mailer :TestMailer do
-        const_set(:Greeting, Class.new(Email)).class_eval do
-          attr_accessor :name
-        end
+      temporary_email_class :Greeting do
+        attr_accessor :name
       end
-      make_template TestMailer, :greeting, "Hi, <%= name %>!"
+      make_template "greeting.erb", "Hi, <%= name %>!"
     end
 
     it "should return true and send the email if the email validates" do
-      model = TestMailer::Greeting.new(:name => 'Fred')
-      model.deliver.should be_true
+      email = Greeting.new(:name => 'Fred')
+      email.deliver.should be_true
       ActionMailer::Base.deliveries.should have(1).email
     end
   end
 
   describe "validations" do
     before do
-      temporary_mailer :TestMailer do
-        const_set(:Greeting, Class.new(Email)).class_eval do
-          attr_accessor :name
-          validates_presence_of :name
-        end
+      temporary_email_class :Greeting do
+        attr_accessor :name
+        validates_presence_of :name
       end
     end
 
     it "should work like ActiveRecord" do
-      model = TestMailer::Greeting.new(:name => '')
+      model = Greeting.new(:name => '')
       model.should_not be_valid
       model.errors.on(:name).should_not be_nil
     end
 
     it "should prevent the email being sent if the email does not validate" do
-      model = TestMailer::Greeting.new(:name => '')
+      model = Greeting.new(:name => '')
       model.deliver.should be_false
       model.errors.on(:name).should_not be_nil
       ActionMailer::Base.deliveries.should be_empty
@@ -44,17 +40,15 @@ describe Email do
 
   describe "before_delivery callback" do
     before do
-      temporary_mailer :TestMailer do
-        const_set(:Greeting, Class.new(Email)).class_eval do
-          attr_accessor :num_deliveries
-          before_delivery :set_num_deliveries
-          def set_num_deliveries
-            self.num_deliveries = ActionMailer::Base.deliveries.size
-          end
+      temporary_email_class :Greeting do
+        attr_accessor :num_deliveries
+        before_delivery :set_num_deliveries
+        def set_num_deliveries
+          self.num_deliveries = ActionMailer::Base.deliveries.size
         end
       end
-      make_template TestMailer, :greeting, ''
-      @email = TestMailer::Greeting.new
+      make_template "greeting.erb", ''
+      @email = Greeting.new
     end
 
     it "should fire just before calling #deliver" do
@@ -71,17 +65,15 @@ describe Email do
 
   describe "after_delivery callback" do
     before do
-      temporary_mailer :TestMailer do
-        const_set(:Greeting, Class.new(Email)).class_eval do
-          attr_accessor :num_deliveries
-          after_delivery :set_num_deliveries
-          def set_num_deliveries
-            self.num_deliveries = ActionMailer::Base.deliveries.size
-          end
+      temporary_email_class :Greeting do
+        attr_accessor :num_deliveries
+        after_delivery :set_num_deliveries
+        def set_num_deliveries
+          self.num_deliveries = ActionMailer::Base.deliveries.size
         end
       end
-      make_template TestMailer, :greeting, ''
-      @email = TestMailer::Greeting.new
+      make_template "greeting.erb", ''
+      @email = Greeting.new
     end
 
     it "should fire just after calling #deliver" do
@@ -98,11 +90,9 @@ describe Email do
 
   describe "email fields" do
     before do
-      temporary_mailer :TestMailer do
-        const_set(:Greeting, Class.new(Email))
-      end
-      make_template TestMailer, :greeting, 'hi'
-      @email = TestMailer::Greeting.new
+      temporary_email_class :Greeting
+      make_template "greeting.erb", 'hi'
+      @email = Greeting.new
     end
 
     def delivery

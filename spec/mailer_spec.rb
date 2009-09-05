@@ -3,11 +3,9 @@ require 'spec_helper'
 describe Mailer do
   describe "#easy_email" do
     before do
-      temporary_mailer :TestMailer do
-        const_set(:Greeting, Class.new(Email))
-      end
-      make_template TestMailer, :greeting, 'hi'
-      @email = TestMailer::Greeting.new
+      temporary_email_class :Greeting
+      make_template "greeting.erb", 'hi'
+      @email = Greeting.new
     end
 
     def delivery
