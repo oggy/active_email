@@ -1,6 +1,13 @@
 require 'spec_helper'
 
 describe Email do
+  describe "#initialize" do
+    it "should accept a nil argument, as it is convenient from a controller" do
+      temporary_email_class :Greeting
+      lambda{Greeting.new(nil)}.should_not raise_error
+    end
+  end
+
   describe "#deliver" do
     before do
       temporary_email_class :Greeting do

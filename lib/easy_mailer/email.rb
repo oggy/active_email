@@ -22,9 +22,11 @@ module EasyMailer
     end
     attr_writer :headers
 
-    def initialize(attributes={})
-      attributes.each do |name, value|
-        send("#{name}=", value)
+    def initialize(attributes=nil)
+      unless attributes.nil?
+        attributes.each do |name, value|
+          send("#{name}=", value)
+        end
       end
     end
 
