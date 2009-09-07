@@ -1,6 +1,6 @@
 <%= flash_messages %>
-<% form_tag greetings_path, :action => 'post' do %>
-  <label for="name">Name:</label>
-  <%= text_field_tag 'email[name]', '', :id => 'name' %>
-  <%= submit_tag 'Send Email!' %>
+<% form_for @greeting do |form| %>
+  <%= form.label :name %>
+  <%= form.text_field :name %>
+  <%= form.submit 'Send Email!' %>
 <% end %>

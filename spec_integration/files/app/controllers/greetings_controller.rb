@@ -1,10 +1,11 @@
 class GreetingsController < ApplicationController
   def new
+    @greeting = Greeting.new
   end
 
   def create
-    @email = Greeting.new(params[:email])
-    if @email.deliver
+    @greeting = Greeting.new(params[:greeting])
+    if @greeting.deliver
       flash[:notice] = 'Email sent!'
       redirect_to new_greeting_path
     else
