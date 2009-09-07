@@ -23,6 +23,7 @@ module EasyMailer
     attr_writer :headers
 
     def initialize(attributes=nil)
+      super
       unless attributes.nil?
         attributes.each do |name, value|
           send("#{name}=", value)

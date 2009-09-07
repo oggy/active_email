@@ -6,6 +6,14 @@ describe Email do
       temporary_email_class :Greeting
       lambda{Greeting.new(nil)}.should_not raise_error
     end
+
+    it "should initialize accessible attributes from a hash argument" do
+      temporary_email_class :Greeting do
+        column :name, :string
+      end
+      greeting = Greeting.new(:name => 'Fred')
+      greeting.name.should == 'Fred'
+    end
   end
 
   describe "#deliver" do
