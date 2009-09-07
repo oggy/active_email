@@ -41,6 +41,25 @@ Spec::Rake::SpecTask.new(:spec => :check_dependencies) do |t|
   t.spec_opts = ['--options', "\"#{PLUGIN_ROOT}/spec/spec.opts\""]
 end
 
+namespace :spec do
+  desc "Run integration specs."
+  task :integration do
+    sh "rm -rf spec_integration/tmp"
+    begin
+      # We need to keep the files outside of spec/, since otherwise
+      # the other spec tasks will pick up the spec files inside the
+      # test application.
+      sh [
+        "ROOT=\"#{PLUGIN_ROOT}\" rails --quiet --template spec_integration/application_template.rb spec_integration/tmp",
+        "cd spec_integration/tmp",
+        "rake spec:integration",
+        "cd -",
+        "rm -rf spec_integration/tmp"
+      ].join(' && ')
+    end
+  end
+end
+
 desc "Run all specs in spec directory with RCov"
 Spec::Rake::SpecTask.new(:rcov) do |t|
   t.libs << 'lib' << 'spec'
