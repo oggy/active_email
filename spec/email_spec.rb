@@ -9,7 +9,7 @@ describe Email do
 
     it "should initialize accessible attributes from a hash argument" do
       temporary_email_class :Greeting do
-        column :name, :string
+        attribute :name, :string
       end
       greeting = Greeting.new(:name => 'Fred')
       greeting.name.should == 'Fred'

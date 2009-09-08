@@ -1,5 +1,5 @@
 class Greeting < EasyMailer::Email
-  column :name, :string
+  attribute :name, :string
   validates_presence_of :name
 
   before_delivery :set_email_fields
