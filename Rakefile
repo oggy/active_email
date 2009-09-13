@@ -35,13 +35,15 @@ Rake::RDocTask.new(:rdoc) do |rdoc|
   rdoc.rdoc_files.include('lib/**/*.rb')
 end
 
-Spec::Rake::SpecTask.new(:spec => :check_dependencies) do |t|
-  t.libs << 'lib' << 'spec'
-  t.spec_files = FileList['spec/**/*_spec.rb']
-  t.spec_opts = ['--options', "\"#{PLUGIN_ROOT}/spec/spec.opts\""]
-end
+task :spec => ['spec:unit', 'spec:integration']
 
 namespace :spec do
+  Spec::Rake::SpecTask.new(:unit => :check_dependencies) do |t|
+    t.libs << 'lib' << 'spec'
+    t.spec_files = FileList['spec/**/*_spec.rb']
+    t.spec_opts = ['--options', "\"#{PLUGIN_ROOT}/spec/spec.opts\""]
+  end
+
   desc "Run integration specs."
   task :integration do
     sh "rm -rf spec_integration/tmp"
