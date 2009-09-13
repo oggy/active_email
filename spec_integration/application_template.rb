@@ -3,7 +3,7 @@ root = ENV['ROOT']
 generate 'rspec'
 
 # Install plugin.
-run "ln -s #{root} #{root}/spec_integration/tmp/vendor/plugins/easy_mailer"
+run "ln -s #{root} #{root}/spec_integration/tmp/vendor/plugins/active_email"
 
 # Move *.rake files' content to Rakefile, or else they'll be picked up
 # twice--once directly, and once through the plugin.

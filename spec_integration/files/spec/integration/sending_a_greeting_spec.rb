@@ -2,7 +2,7 @@ require 'spec/spec_helper'
 
 describe "Sending a greeting", :type => :integration do
   before do
-    @fred = EasyMailer::EmailRat.new('fred@example.com')
+    @fred = ActiveEmail::EmailRat.new('fred@example.com')
     visit '/greetings/new'
   end
 

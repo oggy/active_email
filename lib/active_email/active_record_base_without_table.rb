@@ -1,4 +1,4 @@
-module EasyMailer
+module ActiveEmail
   #
   # An abstract subclass of ActiveRecord::Base with the database
   # interaction stubbed out.

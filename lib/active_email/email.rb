@@ -1,4 +1,4 @@
-module EasyMailer
+module ActiveEmail
   class Email < ActiveRecordBaseWithoutTable
     define_callbacks :before_delivery, :after_delivery
 
@@ -37,7 +37,7 @@ module EasyMailer
     def deliver
       if valid?
         run_callbacks :before_delivery
-        Mailer.deliver_easy_email(self)
+        Mailer.deliver_active_email(self)
         run_callbacks :after_delivery
         true
       else

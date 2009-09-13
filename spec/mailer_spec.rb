@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Mailer do
-  describe "#easy_email" do
+  describe "#active_email" do
     before do
       temporary_email_class :Greeting
       make_template "greeting.erb", 'hi'

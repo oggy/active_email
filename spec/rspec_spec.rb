@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-describe EasyMailer::RSpec::Matchers do
-  HaveReceivedEmail = EasyMailer::RSpec::Matchers::HaveReceivedEmail
+describe ActiveEmail::RSpec::Matchers do
+  HaveReceivedEmail = ActiveEmail::RSpec::Matchers::HaveReceivedEmail
 
   describe HaveReceivedEmail do
     before do

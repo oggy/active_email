@@ -1,9 +1,9 @@
 require 'active_support/test_case'
-require 'easy_mailer/email_rat'
-require 'easy_mailer/rspec/matchers'
+require 'active_email/email_rat'
+require 'active_email/rspec/matchers'
 
 ActiveSupport::TestCase.class_eval do
-  include EasyMailer::RSpec::Matchers
+  include ActiveEmail::RSpec::Matchers
 end
 
 Spec::Runner.configure do |c|

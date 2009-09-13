@@ -1,6 +1,6 @@
-module EasyMailer
+module ActiveEmail
   class Mailer < ActionMailer::Base
-    def easy_email(email)
+    def active_email(email)
       @email = email
       template     email.class.name.underscore
       recipients   email.to

@@ -4,8 +4,8 @@ require 'mocha'
 require 'active_record'  # For ActiveRecordBaseWithoutTable
 require 'action_mailer'
 
-require 'easy_mailer'
-require 'easy_mailer/rspec'
+require 'active_email'
+require 'active_email/rspec'
 require 'helpers/temporary_directory'
 require 'helpers/temporary_email_class'
 
@@ -20,4 +20,4 @@ Spec::Runner.configure do |config|
 end
 
 # So we don't have to qualify all our classes.
-include EasyMailer
+include ActiveEmail

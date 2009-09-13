@@ -1,4 +1,4 @@
-module EasyMailer
+module ActiveEmail
   module RSpec
     module Matchers
       #

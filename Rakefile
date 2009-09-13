@@ -7,11 +7,11 @@ PLUGIN_ROOT = File.dirname(__FILE__)
 begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
-    gem.name = "easy_mailer"
+    gem.name = "active_email"
     gem.summary = %Q{Makes using ActionMailer suck less.}
     gem.description = File.read('DESCRIPTION.txt')
     gem.email = "george.ogata@gmail.com"
-    gem.homepage = "http://github.com/oggy/easy_mailer"
+    gem.homepage = "http://github.com/oggy/active_email"
     gem.authors = ["George Ogata"]
     gem.add_development_dependency "rspec", '= 1.2.8'
     gem.add_development_dependency "mocha", '= 0.9.7'
@@ -21,7 +21,7 @@ rescue LoadError
   puts "Jeweler (or a dependency) not available. Install it with: sudo gem install jeweler"
 end
 
-desc 'Generate documentation for the easy_mailer plugin.'
+desc 'Generate documentation for the active_email plugin.'
 Rake::RDocTask.new(:rdoc) do |rdoc|
   if File.exist?('VERSION')
     version = File.read('VERSION')
@@ -29,7 +29,7 @@ Rake::RDocTask.new(:rdoc) do |rdoc|
     version = ""
   end
   rdoc.rdoc_dir = 'rdoc'
-  rdoc.title    = "EasyMailer #{version}"
+  rdoc.title    = "ActiveEmail #{version}"
   rdoc.options << '--line-numbers' << '--inline-source'
   rdoc.rdoc_files.include('README*')
   rdoc.rdoc_files.include('lib/**/*.rb')

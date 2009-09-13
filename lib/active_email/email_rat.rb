@@ -1,4 +1,4 @@
-module EasyMailer
+module ActiveEmail
   #
   # Represents a user's inbox in acceptance tests.
   #

@@ -1,4 +1,4 @@
-module EasyMailer
+module ActiveEmail
   module Helper
     #
     # Delegate methods to the email automatically.

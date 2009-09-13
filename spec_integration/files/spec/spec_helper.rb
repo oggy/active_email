@@ -3,7 +3,7 @@ require 'config/environment'
 
 require 'spec/rails'
 require 'webrat'
-require 'easy_mailer/rspec'
+require 'active_email/rspec'
 
 Webrat.configure do |config|
   config.mode = :rails

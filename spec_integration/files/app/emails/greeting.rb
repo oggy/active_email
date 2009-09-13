@@ -1,4 +1,4 @@
-class Greeting < EasyMailer::Email
+class Greeting < ActiveEmail::Email
   attribute :name, :string
   validates_presence_of :name
 
