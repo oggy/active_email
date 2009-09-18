@@ -22,7 +22,7 @@ module ActiveEmail
     def receive
       begin
         advance
-      end until email.nil? || Array(email.to).include?(address)
+      end until email.nil? || @received
       !!email
     end
 
@@ -33,6 +33,20 @@ module ActiveEmail
       @index < 0 ? nil : deliveries[@index]
     end
 
+    #
+    # Return true if we were CCd on the last received email.
+    #
+    def ccd?
+      @ccd
+    end
+
+    #
+    # Return true if we were BCCd on the last received email.
+    #
+    def bccd?
+      @bccd
+    end
+
     private
 
     def deliveries
@@ -41,6 +55,11 @@ module ActiveEmail
 
     def advance
       @index += 1
+      if email
+        @ccd = Array(email.cc).include?(address)
+        @bccd = Array(email.bcc).include?(address)
+        @received = Array(email.to).include?(address) || @ccd || @bccd
+      end
     end
   end
 end
