@@ -14,7 +14,7 @@ describe "Sending a greeting", :type => :integration do
     response.should contain('Email sent!')
   end
 
-  it "should not send a greeting the name is missing" do
+  it "should not send a greeting if the name is missing" do
     click_button 'Send email!'
     @fred.should_not have_received_email
     response.should contain('Oh noes!')
